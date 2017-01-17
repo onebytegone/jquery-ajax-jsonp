@@ -9414,9 +9414,12 @@ support.ajax = xhrSupported = !!xhrSupported;
 
 jQuery.ajaxTransport( function( options ) {
 	var callback, errorCallback;
+	console.log('attempting XHR transport...');
 
 	// Cross domain only allowed if supported through XMLHttpRequest
 	if ( support.cors || xhrSupported && !options.crossDomain ) {
+		console.log('running XHR transport...');
+
 		return {
 			send: function( headers, complete ) {
 				var i,
@@ -9591,9 +9594,12 @@ jQuery.ajaxPrefilter( "script", function( s ) {
 
 // Bind script tag hack transport
 jQuery.ajaxTransport( "script", function( s ) {
+	console.log('attempting <script> transport...');
 
 	// This transport only deals with cross domain requests
 	if ( s.crossDomain ) {
+		console.log('running <script> transport...');
+
 		var script, callback;
 		return {
 			send: function( _, complete ) {
@@ -9641,6 +9647,8 @@ jQuery.ajaxSetup( {
 
 // Detect, normalize options and install callbacks for jsonp requests
 jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
+	console.log('starting "json jsonp" prefilter... ');
+	console.log('url: ', s.url);
 
 	var callbackName, overwritten, responseContainer,
 		jsonProp = s.jsonp !== false && ( rjsonp.test( s.url ) ?
@@ -9653,6 +9661,9 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
 	// Handle iff the expected data type is "jsonp" or we have a parameter to set
 	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
+		console.log('converting jsonp callback...');
+		console.log('jsonProp: ', jsonProp);
+		console.log('s.dataTypes[0]: ', s.dataTypes[ 0 ]);
 
 		// Get callback name, remembering preexisting value associated with it
 		callbackName = s.jsonpCallback = jQuery.isFunction( s.jsonpCallback ) ?
